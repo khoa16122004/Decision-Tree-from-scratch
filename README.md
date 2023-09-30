@@ -1,8 +1,6 @@
 ## Decision-Tree-from-scratch
 
-## Using ID3 algorithm to built Decision Tree from scratch
-
-This repo using ID3 to find the best-split of Decision Tree
+This repo using ID3 ID3 algorithm  to find the best-split of Decision Tree
 
 ![Decision Tree](https://cdn.educba.com/academy/wp-content/uploads/2019/11/Create-Decision-Tree-1.png)
 
