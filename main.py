@@ -8,13 +8,13 @@ from sklearn.metrics import accuracy_score
 # Lưu ý input data phải ở dạng numpy array
 # Các cột rời rạc phải được số hóa
 
-
+# define model với min_samples = 2, max_dept = 2
 model = DecisionTree(2,2)
 
 # Tiền xử lý
 penguins = load_penguins()
 penguins=pd.get_dummies(penguins, columns = ["island"], prefix = ["island"]) # one hot encoding
-species_mapping = {'Adelie': 0, 'Gentoo': 1, 'Chinstrap': 2} 
+species_mapping = {'Adelie': 0, 'Gentoo': 1, 'Chinstrap': 2}  
 sex_mapping = {'male': 0, 'female': 1} 
 
 penguins["species"] = penguins["species"].replace(species_mapping) 
