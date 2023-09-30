@@ -4,6 +4,8 @@
 
 This repo using ID3 to find the best-split of Decision Tree
 
+![Decision Tree](https://cdn.educba.com/academy/wp-content/uploads/2019/11/Create-Decision-Tree-1.png)
+
 ## The definition of Suprise of the dataset
 
 This is the metric that evaluate the **Inpeture** of the dataset by their label.
