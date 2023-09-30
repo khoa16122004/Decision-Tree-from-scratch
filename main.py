@@ -5,6 +5,9 @@ from model import DecisionTree
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+# Lưu ý input data phải ở dạng numpy array
+# Các cột rời rạc phải được số hóa
+
 
 model = DecisionTree(2,2)
 
