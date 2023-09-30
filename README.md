@@ -10,7 +10,7 @@ This repo using ID3 to find the best-split of Decision Tree
 
 This is the metric that evaluate the **Inpeture** of the dataset by their label.
 
-The higher Inpeture is, the higher Suprise is, that mean the dataset is difficul to predict
+The higher Inpeture is, the higher Suprise is, that mean the dataset is difficult to predict
 
 We can basicly guess that if the probalities of a event is low, the more suprise we get and contrast
 
