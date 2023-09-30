@@ -23,9 +23,10 @@ class DecisionTree():
         self.min_samples = min_samples
         self.max_depth = max_depth
 
+    # So với ngưỡng để split node
     def split_data(self, dataset, feature_index, threshold):
         
-        # feature_indẽ: index của feature trong data
+        # feature_index: index của feature trong data
         # threshold: dùng để split
         
         
@@ -33,42 +34,45 @@ class DecisionTree():
         right_dataset = []
         
         for row in dataset:
-            if row[feature_index] <= threshold:
+            if row[feature_index] <= threshold: # left: True 
                 left_dataset.append(row)
             else:
-                right_dataset.append(row)
+                right_dataset.append(row) # right: False
 
         left_dataset = np.array(left_dataset)
         right_dataset = np.array(right_dataset)
         return left_dataset, right_dataset
 
+    # Tính entropy của một tập D
+    # E(D) =  sigma(p_i * log(1 / p_i)) = -sigma(p_i * log(1 / p_i))
     def entropy(self, y):
         
-        
         # y_lable
-        # E(D) =  sigma(p_i * log(1 / p_i)) = -sigma(p_i * log(1 / p_i))
         
         entropy = 0
-        labels = np.unique(y)
-        for label in labels:
-            label_examples = y[y == label]
-            pl = len(label_examples) / len(y)
-            entropy += -pl * np.log2(pl)
+        y_unique = np.unique(y)
+        for label in y_unique:
+            label_examples = y_unique[y_unique == label]
+            p_i = len(label_examples) / len(y) # xác xuất của một biến cố i
+            entropy += -p_i * np.log2(p_i) # được đề xuất là đổi log_n theo n field
 
         return entropy
 
+    
+    # Tính information gain 
+    # E(D|feature) = -sigma(p_i(D|feature) * log(p_i(D|feature))) 
+    # I_g(D) = E(D) - E(D|A)
     def information_gain(self, parent, left, right):
        
-        # E(D|feature) = -sigma(p_i(D|feature) * log(p_i(D|feature))) 
-       
-       
+
+        # Có thể không cần tính information gain mà sẽ so sánh mean Entropy
         information_gain = 0
         parent_entropy = self.entropy(parent)
         weight_left = len(left) / len(parent)
         weight_right= len(right) / len(parent)
         entropy_left, entropy_right = self.entropy(left), self.entropy(right)
-        weighted_entropy = weight_left * entropy_left + weight_right * entropy_right
-        information_gain = parent_entropy - weighted_entropy # your option to cal
+        weighted_entropy = weight_left * entropy_left + weight_right * entropy_righ
+        information_gain = parent_entropy - weighted_entropy # Option
         return information_gain
 
     
@@ -83,20 +87,7 @@ class DecisionTree():
             # Lưu ý nên số hóa các cột không rời rạc
             thresholds = np.unique(feature_values)
             
-            
-            # Có thể dùng mean để làm threshold
-            ## threshold = np.mean(feature_values) 
-            ## left_dataset, right_dataset = self.split_data(dataset, feature_index, threshold)
-            ##     if len(left_dataset) and len(right_dataset):
-            ##         y, left_y, right_y = dataset[:, -1], left_dataset[:, -1], right_dataset[:, -1]
-            ##         information_gain = self.information_gain(y, left_y, right_y)
-            ##         if information_gain > best_split["gain"]:                        
-            ##             best_split["feature"] = feature_index
-            ##             best_split["threshold"] = threshold
-            ##             best_split["right_dataset"] = right_dataset
-            ##             best_split["gain"] = information_gain
-            
-            
+            # pp này chọn threshold bằng cách duyệt qua tất cả các value của một feature và tìm value nào cho entropy thấp nhất hay information_gain cao nhất
             for threshold in thresholds:
                 left_dataset, right_dataset = self.split_data(dataset, feature_index, threshold)
                 if len(left_dataset) and len(right_dataset):
@@ -109,6 +100,23 @@ class DecisionTree():
                         best_split["left_dataset"] = left_dataset
                         best_split["right_dataset"] = right_dataset
                         best_split["gain"] = information_gain
+
+
+
+            # Có thể dùng mean để làm threshold
+        
+            ## threshold = np.mean(feature_values) 
+            ## left_dataset, right_dataset = self.split_data(dataset, feature_index, threshold)
+            ##     if len(left_dataset) and len(right_dataset):
+            ##         y, left_y, right_y = dataset[:, -1], left_dataset[:, -1], right_dataset[:, -1]
+            ##         information_gain = self.information_gain(y, left_y, right_y)
+            ##         if information_gain > best_split["gain"]:                        
+            ##             best_split["feature"] = feature_index
+            ##             best_split["threshold"] = threshold
+            ##             best_split["right_dataset"] = right_dataset
+            ##             best_split["gain"] = information_gain
+
+        
         return best_split
 
     
@@ -136,12 +144,13 @@ class DecisionTree():
 
         leaf_value = self.calculate_leaf_value(y)
         return Node(value=leaf_value)
-    
+
+    # train
     def fit(self, X, y):
       
         dataset = np.concatenate((X, y), axis=1)  
         self.root = self.build_tree(dataset)
-
+    #
     def predict(self, X):
        
         predictions = []
