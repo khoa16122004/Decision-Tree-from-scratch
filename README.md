@@ -20,6 +20,14 @@ So the probalities is inverst with Inpeture, and we have some metrics show that 
 * Gini
 * Log_loss (or Cross_entropy)
 
+### Entropy
+Entropy(S) = −∑_ip_i log_2(p_i)
+
+where:
+* S is the dataset
+* pi is the proportion of label i in dataset S
+
+
 ### Gini index
 Gini(S) = 1 − ∑_ip_i^2
 
