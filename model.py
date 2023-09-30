@@ -149,7 +149,7 @@ class DecisionTree():
         dataset = np.concatenate((X, y), axis=1)  
         self.root = self.build_tree(dataset)
         
-    # 
+    # predict trên một tập nào đó
     def predict(self, X):
        
         predictions = []
@@ -159,13 +159,3 @@ class DecisionTree():
         np.array(predictions)
         return predictions
     
-    def make_prediction(self, x, node):
-        
-        if node.value != None: 
-            return node.value
-        else:
-            feature = x[node.feature]
-            if feature <= node.threshold:
-                return self.make_prediction(x, node.left)
-            else:
-                return self.make_prediction(x, node.right)
