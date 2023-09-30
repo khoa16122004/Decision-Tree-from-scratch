@@ -75,10 +75,9 @@ class DecisionTree():
         information_gain = parent_entropy - weighted_entropy # Option
         return information_gain
 
-    
+   # Tìm feautre có information_gain cao nhất
     def best_split(self, dataset, num_samples, num_features):
        
-       # Tìm feautre có information_gain cao nhất
        
         best_split = {'gain':- 1, 'feature': None, 'threshold': None}
         for feature_index in range(num_features):
@@ -129,12 +128,11 @@ class DecisionTree():
         return most_occuring_value
     
     
-    
     def build_tree(self, dataset, current_depth=0):
         
         X, y = dataset[:, :-1], dataset[:, -1]
         n_samples, n_features = X.shape
-        if n_samples >= self.min_samples and current_depth <= self.max_depth:
+        if n_samples >= self.min_samples and current_depth <= self.max_depth: # điều kiện dừng
             best_split = self.best_split(dataset, n_samples, n_features)
             if best_split["gain"]:
                 left_node = self.build_tree(best_split["left_dataset"], current_depth + 1)
@@ -150,7 +148,8 @@ class DecisionTree():
       
         dataset = np.concatenate((X, y), axis=1)  
         self.root = self.build_tree(dataset)
-    #
+        
+    # 
     def predict(self, X):
        
         predictions = []
