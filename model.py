@@ -58,6 +58,21 @@ class DecisionTree():
 
         return entropy
 
+
+    # Tính Gini của một tập D
+    # Gini(D) = 1 - sigma(p_i ** 2)
+    def Gini(self, y):
+            
+            # y_lable
+            
+            Gini = 1
+            y_unique = np.unique(y)
+            for label in y_unique:
+                label_examples = y_unique[y_unique == label]
+                p_i = len(label_examples) / len(y) # xác xuất của một biến cố i
+                Gini += -p_i ** 2    
+    
+            return Gini
     
     # Tính information gain 
     # E(D|feature) = -sigma(p_i(D|feature) * log(p_i(D|feature))) 
