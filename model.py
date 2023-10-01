@@ -1,6 +1,11 @@
 import numpy as np
 import pandas as pd
 
+# Code được viết dựa trên numpy array
+# input data phải ở dạng numpy array
+# Các cột rời rạc phải được số hóa
+
+
 
 class Node():
     
