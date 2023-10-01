@@ -15,7 +15,7 @@ class Node():
         self.threshold = threshold
         self.left = left
         self.right = right
-        self.gain = gain
+        self.gain = gain # có cũng được không có cũng không sao
         self.value = value
 
 class DecisionTree():
