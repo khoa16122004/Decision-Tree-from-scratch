@@ -91,7 +91,7 @@ class DecisionTree():
         weight_left = len(left) / len(parent)
         weight_right= len(right) / len(parent)
         entropy_left, entropy_right = self.entropy(left), self.entropy(right)
-        weighted_entropy = weight_left * entropy_left + weight_right * entropy_righ
+        weighted_entropy = weight_left * entropy_left + weight_right * entropy_right
         information_gain = parent_entropy - weighted_entropy # Option
         return information_gain
 
@@ -168,8 +168,22 @@ class DecisionTree():
       
         dataset = np.concatenate((X, y), axis=1)  
         self.root = self.build_tree(dataset)
+
+    # predict đề quy
+   def make_prediction(self, x, node):
         
-    # predict trên một tập nào đó
+        if node.value != None: 
+            return node.value
+        else:
+            feature = x[node.feature]
+            if feature <= node.threshold:
+                return self.make_prediction(x, node.left)
+            else:
+                return self.make_prediction(x, node.right)
+
+
+    
+    # predict trên một tập nào đó sử dụng make_prediction
     def predict(self, X):
        
         predictions = []
